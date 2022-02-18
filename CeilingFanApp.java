@@ -1,40 +1,22 @@
-import javax.swing.SpinnerDateModel;
+import java.util.Scanner;
 
 public class CeilingFanApp {
 
   public static void main(String[] args) {
-    CeilingFan ceilingFan = new CeilingFan(0, "Right");
+    CeilingFan ceilingFan = new CeilingFan();
+    Scanner myScanner = new Scanner(System.in);
 
-    System.out.println(ceilingFan.toString());
-
-    ceilingFan.pullCord(1);
-
-    System.out.println(ceilingFan.toString());
-
-    ceilingFan.pullCord(2);
-
-    System.out.println(ceilingFan.toString());
-
-    ceilingFan.pullCord(1);
-
-    System.out.println(ceilingFan.toString());
-
-    ceilingFan.pullCord(1);
-
-    System.out.println(ceilingFan.toString());
-
-    ceilingFan.pullCord(1);
-
-    System.out.println(ceilingFan.toString());
   }
 
   static class CeilingFan {
     public int speed;
     public String direction;
+    public String lastDirection;
 
-    public CeilingFan(int initialSpeed, String initialDirection) {
-      speed = initialSpeed;
-      direction = initialDirection;
+    public CeilingFan() {
+      speed = 0;
+      direction = "Off";
+      lastDirection = "Right";
     }
 
     public int getSpeed() {
@@ -56,16 +38,22 @@ public class CeilingFanApp {
           switch (speed) {
             case 0:
               speed++;
+              direction = lastDirection;
               break;
+
             case 1:
               speed++;
               break;
+
             case 2:
               speed++;
               break;
+
             case 3:
               speed = 0;
+              direction = "Off";
               break;
+
           }
           break;
 
@@ -74,14 +62,21 @@ public class CeilingFanApp {
           // Reverses the direction of the fan at the current speed setting.
           // Once the direction has been reversed, it remains reversed as we
           // cycle through the speed settings, until reversed again.
-          switch (direction) {
-            case "Right":
-              direction = "Left";
-              break;
-            case "Left":
-              direction = "Right";
-              break;
+          if (speed != 0) {
+            switch (lastDirection) {
+              case "Right":
+                lastDirection = "Left";
+                direction = "Left";
+                break;
+
+              case "Left":
+                lastDirection = "Right";
+                direction = "Right";
+                break;
+
+            }
           }
+
           break;
       }
     }// end of pullCord
