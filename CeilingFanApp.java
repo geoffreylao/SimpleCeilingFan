@@ -6,6 +6,67 @@ public class CeilingFanApp {
     CeilingFan ceilingFan = new CeilingFan();
     Scanner myScanner = new Scanner(System.in);
 
+    String fanArt = """
+
+            @@@@@@
+         @@@@@@@@@@@&
+            @@@@@@@@@@@
+              %@@@@@@@@@@
+                 @@@@@@@@@@          @@@@@@@#
+                    @@@@@@@@@&       @@@@@@@*
+                       @@@@@@@@@       @@@
+                         &@@@@@@@@      @
+                            @@@@@@@@,   @
+                               @@@@@@@@@@@,                     .#@@@@@@@@@@@@@@@%
+                                  @@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&,
+                                 @@@@@@@@@@@@@@@%..
+                                  @@@@@@@@@@@.@
+                                @@@@@@&       @
+                             @@@@@@@.         @
+                           @@@@@@@@           @@
+                         @@@@@@@  @
+                          .@@@    @@
+                                  @@
+        """;
+
+    System.out.print(fanArt);
+
+    System.out.println(
+        "\nVrrr I'm a fan. ┌|.o.|┘ Press '1' to adjust my speed. Press '2' to switch my spin direction.");
+
+    while (true) {
+
+      String pullingCord = myScanner.next();
+
+      switch (pullingCord) {
+        case "1":
+          ceilingFan.pullCord(Integer.parseInt(pullingCord));
+          System.out.println("You pulled cord " + pullingCord + "! Changing speed.\n" + ceilingFan.toString() + "\n");
+          break;
+        case "2":
+          ceilingFan.pullCord(Integer.parseInt(pullingCord));
+
+          switch (ceilingFan.speed) {
+            case 0:
+              System.out
+                  .println("You pulled cord " + pullingCord + "! Nothing happened.. \n" + ceilingFan.toString()
+                      + "\n");
+              break;
+            default:
+              System.out
+                  .println("You pulled cord " + pullingCord + "! Changing spin direction. \n" + ceilingFan.toString()
+                      + "\n");
+              break;
+          }
+
+          break;
+        default:
+          System.out.println(pullingCord + " is not a valid cord to pull! Please try again");
+          break;
+      }
+    }
+
   }
 
   static class CeilingFan {
@@ -62,6 +123,7 @@ public class CeilingFanApp {
           // Reverses the direction of the fan at the current speed setting.
           // Once the direction has been reversed, it remains reversed as we
           // cycle through the speed settings, until reversed again.
+          // Assuming that direction cord does nothing when speed is 0 ("off")
           if (speed != 0) {
             switch (lastDirection) {
               case "Right":
